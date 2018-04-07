@@ -36,8 +36,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         Spinner[] sp = new Spinner[100];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
-
-
+        TextView titulo = new TextView(this);
 
         RelativeLayout julgamento = findViewById(R.id.julgamentos);
 
@@ -57,8 +56,14 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         for (Criterio cri : listaCriterios) {
             listaNomeCriterios.add(cri.getNome());
         }
-
-        int x = 50;
+        titulo.setText("Criterio X Criterio");
+        titulo.setWidth(500);
+        titulo.setHeight(150);
+        titulo.setTextSize(30);
+        titulo.setY(50);
+        titulo.setX(30);
+        julgamento.addView(titulo);
+        int x = 200;
         for (int j = 0; j < listaNomeCriterios.size(); j++) {
             for (int k = j + 1; k < listaNomeCriterios.size(); k++) {
                 sp[j] = new Spinner(this);

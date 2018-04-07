@@ -14,8 +14,8 @@
         <RelativeLayout
             android:id="@+id/julgamentos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50px">
 
         </RelativeLayout>
     </LinearLayout>

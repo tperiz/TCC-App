@@ -35,6 +35,7 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
         Spinner[] sp = new Spinner[100];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
+        TextView titulo = new TextView(this);
 
         RelativeLayout julgamento = findViewById(R.id.julgamentos);
 
@@ -61,7 +62,14 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
             }
 
         }
-        int x = 50;
+        titulo.setText("Criterio X Alternativa");
+        titulo.setWidth(700);
+        titulo.setHeight(150);
+        titulo.setTextSize(30);
+        titulo.setY(50);
+        titulo.setX(30);
+        julgamento.addView(titulo);
+        int x = 200;
         for (int j = 0; j < listaCriterios.size(); j++) {
             if(listaCriterios.get(j).getAlt().size() > 0){
                 for (int k = 0 ; k < listaCriterios.get(j).getAlt().size(); k++) {
