@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int selecionado = lista3.get(s.getSelectedItemPosition()).intValue();
 
-                Intent it = new Intent(MainActivity.this, TelaCriterio.class);
+                Intent it = new Intent(MainActivity.this, TelaJulgamento.class);
                 it.putExtra("selecionado", selecionado);
                 startActivity(it);
             }

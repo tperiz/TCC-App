@@ -1,5 +1,7 @@
 package com.example.t_per.testarwebservice;
 
+import java.util.ArrayList;
+
 public class SubCriterio {
 	
 	private int idcriterio;
@@ -7,6 +9,7 @@ public class SubCriterio {
 	private int idhierarquia;
 	private String nome;
 	private String descricao;
+	private ArrayList<Alternativa> alt = new ArrayList<Alternativa>();
 	
 	
 	public int getIdcriterio() {
@@ -39,7 +42,12 @@ public class SubCriterio {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
 
+	public ArrayList<Alternativa> getAlt() {
+		return alt;
+	}
+
+	public void setAlt(ArrayList<Alternativa> alt) {
+		this.alt = alt;
+	}
 }

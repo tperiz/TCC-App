@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Thiago on 17/03/2018.
  */
 
-public class TelaSubCriterio extends AppCompatActivity {
+public class TelaCriterioXSubCriterio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,48 +59,68 @@ public class TelaSubCriterio extends AppCompatActivity {
         }
         int x = 50;
        for (int j = 0; j < listaCriterios.size(); j++) {
-            for (int k = 0 ; k < listaCriterios.get(j).getSub().size(); k++) {
-                sp[j] = new Spinner(this);
-                sp[j].setX(200);
-                sp[j].setY(x - 30);
-                julgamento.addView(sp[j]);
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
-                ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                sp[j].setAdapter(spinnerArrayAdapter);
+           if(listaCriterios.get(j).getSub() != null){
+               for (int k = 0 ; k < listaCriterios.get(j).getSub().size(); k++) {
+                   sp[j] = new Spinner(this);
+                   sp[j].setX(200);
+                   sp[j].setY(x - 30);
+                   julgamento.addView(sp[j]);
+                   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
+                   ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+                   spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                   sp[j].setAdapter(spinnerArrayAdapter);
 
-                txEsquerda[j] = new TextView(this);
-                txEsquerda[j].setX(50);
-                txEsquerda[j].setY(x);
-                txEsquerda[j].setText(listaCriterios.get(j).getNome());
-                julgamento.addView(txEsquerda[j]);
+                   txEsquerda[j] = new TextView(this);
+                   txEsquerda[j].setX(50);
+                   txEsquerda[j].setY(x);
+                   txEsquerda[j].setText(listaCriterios.get(j).getNome());
+                   julgamento.addView(txEsquerda[j]);
 
-                txDireita[k] = new TextView(this);
-                txDireita[k].setX(450);
-                txDireita[k].setY(x);
-                txDireita[k].setText(listaCriterios.get(j).getSub().get(k).getNome());
-                julgamento.addView(txDireita[k]);
+                   txDireita[k] = new TextView(this);
+                   txDireita[k].setX(450);
+                   txDireita[k].setY(x);
+                   txDireita[k].setText(listaCriterios.get(j).getSub().get(k).getNome());
+                   julgamento.addView(txDireita[k]);
 
-                x = x + 100;
-            }
-
+                   x = x + 100;
+               }
+           }
         }
 
-        Button b = new Button(this);
-        b.setWidth(20);
-        b.setHeight(10);
-        b.setText("Proximo");
-        b.setY(x);
-        b.setX(200);
-        julgamento.addView(b);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button voltar = new Button(this);
+        voltar.setWidth(20);
+        voltar.setHeight(10);
+        voltar.setText("Voltar");
+        voltar.setY(x);
+        voltar.setX(100);
+        julgamento.addView(voltar);
+
+        Button enviar = new Button(this);
+        enviar.setWidth(20);
+        enviar.setHeight(10);
+        enviar.setText("Proximo");
+        enviar.setY(x);
+        enviar.setX(300);
+        julgamento.addView(enviar);
+
+        enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(TelaSubCriterio.this, TelaSubCriterio.class);
+                Intent it = new Intent(TelaCriterioXSubCriterio.this, TelaSubCriterioXAlternativa.class);
                 it.putExtra("selecionado", selecionado);
                 startActivity(it);
             }
         });
+
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaCriterioXSubCriterio.this, TelaJulgamento.class);
+                it.putExtra("selecionado", selecionado);
+                startActivity(it);
+            }
+        });
+
         ViewGroup.LayoutParams params = julgamento.getLayoutParams();
         params.height= x + 200;
     }

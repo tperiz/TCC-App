@@ -58,4 +58,12 @@ public class Criterio {
     public void setSub(ArrayList<SubCriterio> sub) {
         this.sub = sub;
     }
+
+    public ArrayList<Alternativa> getAlt() {
+        return alt;
+    }
+
+    public void setAlt(ArrayList<Alternativa> alt) {
+        this.alt = alt;
+    }
 }

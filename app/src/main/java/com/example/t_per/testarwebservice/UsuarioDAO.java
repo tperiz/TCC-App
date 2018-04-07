@@ -25,7 +25,8 @@ public class UsuarioDAO {
     private static final String buscarTodosUsu = "buscarTodosUsuarios";
     private static final String buscarTodosCri = "buscarTodosCriterios";
     private static final String buscarTodosHie = "buscarTodasHierarquias";
-    private static final String buscarTodasAlt = "buscarTodasAlternativas";
+    private static final String buscarTodasAltSub = "buscarTodasAlternativasPorSubcriterio";
+    private static final String buscarTodasAltHie = "buscarTodasAlternativasPorHierarquia";
     private static final String buscarTodosSub = "buscarTodosSubCriterios";
     private static final String buscarPorId = "buscarUsuarioPorId";
 
@@ -156,11 +157,10 @@ public class UsuarioDAO {
         return lista;
     }
 
-    public ArrayList<Alternativa> buscarTodasAlternativas(int criterio, int subcriterio, int hierarquia){
+    public ArrayList<Alternativa> buscarTodasAlternativasPorSubcriterio(int subcriterio, int hierarquia){
         ArrayList<Alternativa> lista = new ArrayList<Alternativa>();
 
-        SoapObject buscarAlternativas = new SoapObject(NAMESPACE,buscarTodasAlt);
-        buscarAlternativas.addProperty("criterio", criterio);
+        SoapObject buscarAlternativas = new SoapObject(NAMESPACE,buscarTodasAltSub);
         buscarAlternativas.addProperty("subcriterio", subcriterio);
         buscarAlternativas.addProperty("hierarquia", hierarquia);
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -169,7 +169,38 @@ public class UsuarioDAO {
 
         HttpTransportSE http = new HttpTransportSE(URL);
         try {
-            http.call("urn:" + buscarTodasAlt, envelope);
+            http.call("urn:" + buscarTodasAltSub, envelope);
+            Vector<SoapObject> resposta = (Vector<SoapObject>) envelope.getResponse();
+            for (SoapObject soapObject: resposta) {
+                Alternativa alt = new Alternativa();
+                alt.setIdcriterio(Integer.parseInt(soapObject.getProperty("idcriterio").toString()));
+                alt.setIdsubcriterio(Integer.parseInt(soapObject.getProperty("idsubcriterio").toString()));
+                alt.setNome(soapObject.getProperty("nome").toString());
+                alt.setDescricao(soapObject.getProperty("descricao").toString());
+                alt.setHierarquia(Integer.parseInt(soapObject.getProperty("hierarquia").toString()));
+                lista.add(alt);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return lista;
+    }
+
+    public ArrayList<Alternativa> buscarTodasAlternativasPorHierarquia(int hierarquia){
+        ArrayList<Alternativa> lista = new ArrayList<Alternativa>();
+
+        SoapObject buscarAlternativas = new SoapObject(NAMESPACE,buscarTodasAltHie);
+        buscarAlternativas.addProperty("hierarquia", hierarquia);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(buscarAlternativas);
+        envelope.implicitTypes = true;
+
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + buscarTodasAltHie, envelope);
             Vector<SoapObject> resposta = (Vector<SoapObject>) envelope.getResponse();
             for (SoapObject soapObject: resposta) {
                 Alternativa alt = new Alternativa();

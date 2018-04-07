@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by thi on 09/01/18.
  */
 
-public class TelaCriterio extends AppCompatActivity {
+public class TelaCriterioXCriterio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,21 +88,38 @@ public class TelaCriterio extends AppCompatActivity {
 
         }
 
-        Button b = new Button(this);
-        b.setWidth(20);
-        b.setHeight(10);
-        b.setText("Proximo");
-        b.setY(x);
-        b.setX(200);
-        julgamento.addView(b);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button voltar = new Button(this);
+        voltar.setWidth(20);
+        voltar.setHeight(10);
+        voltar.setText("Voltar");
+        voltar.setY(x);
+        voltar.setX(100);
+        julgamento.addView(voltar);
+
+        Button enviar = new Button(this);
+        enviar.setWidth(20);
+        enviar.setHeight(10);
+        enviar.setText("Julgar");
+        enviar.setY(x);
+        enviar.setX(300);
+        julgamento.addView(enviar);
+
+        enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(TelaCriterio.this, TelaSubCriterio.class);
+
+            }
+        });
+
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaCriterioXCriterio.this, TelaJulgamento.class);
                 it.putExtra("selecionado", selecionado);
                 startActivity(it);
             }
         });
+
         ViewGroup.LayoutParams params = julgamento.getLayoutParams();
         params.height= x + 200;
     }

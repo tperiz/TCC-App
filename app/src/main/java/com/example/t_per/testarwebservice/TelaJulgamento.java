@@ -1,25 +1,24 @@
 package com.example.t_per.testarwebservice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by thi on 09/01/18.
- */
-
 public class TelaJulgamento extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.julgamento);
+        setContentView(R.layout.tela_julgamento);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -27,61 +26,51 @@ public class TelaJulgamento extends AppCompatActivity {
         }
 
         Bundle extras = getIntent().getExtras();
-        int selecionado = extras.getInt("selecionado");
+        final int selecionado = extras.getInt("selecionado");
 
-        Spinner[] sp = new Spinner[100];
-        TextView[] tx = new TextView[100];
-        TextView[] tx2 = new TextView[100];
+        Button crixcri;
+        Button crixalt;
+        Button crixsubcri;
+        Button voltar;
 
-        RelativeLayout julgamento = (RelativeLayout) findViewById(R.id.julgamento);
+        crixcri = findViewById(R.id.crixcri);
+        crixalt = findViewById(R.id.crixalt);
+        crixsubcri = findViewById(R.id.crixsubcri);
+        voltar = findViewById(R.id.voltar);
 
-        ArrayList<String> lista3 = new ArrayList<String>();
-        for (int i = 2; i < 10; i++) {
-            if (i != 0 && i != -1)
-                lista3.add("Esquerda" + i);
-        }
-        lista3.add("1");
-        for (int i = 2; i < 10; i++) {
-            if (i != 0 && i != -1)
-                lista3.add("Direita" + i);
-        }
-        UsuarioDAO dao = new UsuarioDAO();
-        ArrayList<Criterio> lista = new ArrayList<Criterio>();
-        ArrayList<String> lista2 = new ArrayList<String>();
-        lista = new ArrayList<Criterio>();
-        lista = dao.buscarTodosCriterios(selecionado);
-        for (Criterio cri : lista) {
-            lista2.add(cri.getNome());
-        }
-        int x = 50;
-        for (int j = 0; j < lista2.size(); j++) {
-            for (int k = j + 1; k < lista2.size(); k++) {
-                sp[j] = new Spinner(this);
-                sp[j].setX(200);
-                sp[j].setY(x - 30);
-                julgamento.addView(sp[j]);
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lista3);
-                ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
-                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                sp[j].setAdapter(spinnerArrayAdapter);
-
-                tx[j] = new TextView(this);
-                tx[j].setX(50);
-                tx[j].setY(x);
-                tx[j].setText(lista2.get(j));
-                julgamento.addView(tx[j]);
-
-                tx2[k] = new TextView(this);
-                tx2[k].setX(450);
-                tx2[k].setY(x);
-                tx2[k].setText(lista2.get(k));
-                julgamento.addView(tx2[k]);
-
-                x = x + 100;
+        crixcri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaJulgamento.this, TelaCriterioXCriterio.class);
+                it.putExtra("selecionado", selecionado);
+                startActivity(it);
             }
+        });
 
-        }
+        crixalt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaJulgamento.this, TelaCriterioXAlternativa.class);
+                it.putExtra("selecionado", selecionado);
+                startActivity(it);
+            }
+        });
+
+        crixsubcri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaJulgamento.this, TelaCriterioXSubCriterio.class);
+                it.putExtra("selecionado", selecionado);
+                startActivity(it);
+            }
+        });
+
+        voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(TelaJulgamento.this, MainActivity.class);
+                startActivity(it);
+            }
+        });
     }
-
-
 }
