@@ -17,9 +17,10 @@ import java.util.Vector;
 
 public class UsuarioDAO {
 
-    private static final String URL = "http://192.168.1.6:8080/ExemploWS/services/UsuarioDao?wsdl";
+    private static final String URL = "http://192.168.1.3:8080/ExemploWS/services/UsuarioDao?wsdl";
     private static final String NAMESPACE = "http://exemploWS.videoaulazeni.com.br";
     private static final String inserir = "inserirUsuario";
+    private static final String inserirJulgamento = "inserirJulgamento";
     private static final String excluir = "excluirUsuario";
     private static final String atualizar = "atualizarUsuario";
     private static final String buscarTodosUsu = "buscarTodosUsuarios";
@@ -252,18 +253,28 @@ public class UsuarioDAO {
         return lista;
     }
 
+    public boolean inserirJulgamento(Julgamento julgamento){
 
+        SoapObject inserirJulg = new SoapObject(NAMESPACE,inserirJulgamento);
+        SoapObject user = new SoapObject(NAMESPACE,"julgamento");
+        user.addProperty("valormax", julgamento.getAuto_valor_maximo());
+        user.addProperty("indice", julgamento.getIndice_coerencia());
+        user.addProperty("razao", julgamento.getRazao_coerencia());
+        inserirJulg.addSoapObject(user);
 
-    public Usuario buscarUsuarioPorId(int id){
-        Usuario user = null;
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(inserirJulg);
+        envelope.implicitTypes = true;
 
-        return user;
-    }
-
-    public boolean atualizarUsuario(Usuario usuario){
-
-
-        return true;
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + inserirJulgamento, envelope);
+            SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
+            return Boolean.parseBoolean(resposta.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 

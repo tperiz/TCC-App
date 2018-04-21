@@ -33,23 +33,19 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final int selecionado = extras.getInt("selecionado");
 
-        Spinner[] sp = new Spinner[100];
+        Spinner[] spesquerda = new Spinner[100];
+        Spinner[] spdireita = new Spinner[100];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
         TextView titulo = new TextView(this);
 
         RelativeLayout julgamento = findViewById(R.id.julgamentos);
 
-        ArrayList<String> listaSpinners = new ArrayList<String>();
-        for (int i = 9; i >= 2; i--) {
-            if (i != 0 && i != -1)
-                listaSpinners.add("Esquerda" + i);
+        ArrayList<Integer> listaSpinners = new ArrayList<Integer>();
+        for (int i = 0; i <= 9; i++) {
+            listaSpinners.add(i);
         }
-        listaSpinners.add("1");
-        for (int i = 2; i < 10; i++) {
-            if (i != 0 && i != -1)
-                listaSpinners.add("Direita" + i);
-        }
+
         UsuarioDAO dao = new UsuarioDAO();
         final ArrayList<Criterio> listaCriterios = dao.buscarTodosCriterios(selecionado);
         ArrayList<String> listaNomeCriterios = new ArrayList<String>();
@@ -66,15 +62,26 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         int x = 200;
         for (int j = 0; j < listaNomeCriterios.size(); j++) {
             for (int k = j + 1; k < listaNomeCriterios.size(); k++) {
-                sp[j] = new Spinner(this);
-                sp[j].setX(200);
-                sp[j].setY(x - 30);
+                spesquerda[j] = new Spinner(this);
+                spesquerda[j].setX(150);
+                spesquerda[j].setY(x - 30);
+                spdireita[j] = new Spinner(this);
+                spdireita[j].setX(300);
+                spdireita[j].setY(x - 30);
 
-                julgamento.addView(sp[j]);
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
-                ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+                julgamento.addView(spesquerda[j]);
+                ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
+                ArrayAdapter<Integer> spinnerArrayAdapter = arrayAdapter;
                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                sp[j].setAdapter(spinnerArrayAdapter);
+                spesquerda[j].setAdapter(spinnerArrayAdapter);
+                spesquerda[j].setHorizontalScrollBarEnabled(true);
+
+                julgamento.addView(spdireita[j]);
+                ArrayAdapter<Integer> arrayAdapter2 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
+                ArrayAdapter<Integer> spinnerArrayAdapter2 = arrayAdapter2;
+                spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                spdireita[j].setAdapter(spinnerArrayAdapter2);
+                spdireita[j].setHorizontalScrollBarEnabled(true);
 
                 txEsquerda[j] = new TextView(this);
                 txEsquerda[j].setX(50);
@@ -112,7 +119,51 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//                double aux = 0;
+//                //System.out.println(" listCheckBoxes " + listCheckBoxes.size());
+//                for (int i = 0; i < 6; i++) {
+//                    JRadioButton checkBoxes[] = listCheckBoxes.get(i);
+//                    for (int j = 0; j < checkBoxes.length; j++) {
+//                        if (checkBoxes[j].isSelected()) {
+//                            aux = Double.valueOf(vetNumbers[j]);
+//                            numerosJulgamento.add(aux);
+//                        }
+//                    }
+//                }
+//                int j = 1;
+//                int k = 0;
+//                int aux1 = 0;
+//                int aux2 = 0;
+//                String aux3 = "";
+//                for (int i = 0; i < posicaoMatJulg.size(); i = i + 2) {
+//                    aux1 = posicaoMatJulg.get(i);
+//                    aux2 = posicaoMatJulg.get(j);
+//                    aux3 = String.valueOf(numerosJulgamento.get(k));
+//                    matJulg[aux1][aux2] = Double.valueOf(aux3);
+//                    k++;
+//                    j = j + 2;
+//                }
+//                for (int l = 0; l < matJulg.length; l++) {
+//                    for (int m = 0; m < matJulg.length; m++) {
+//                        if (l == m) {
+//                            matJulg[l][m] = 1;
+//                        }
+//                        matJulg[m][l] = 1 / matJulg[l][m];
+//
+//                        System.out.print("|");
+//                        System.out.print(matJulg[l][m]);
+//                        System.out.print("|");
+//                    }
+//                    System.out.println("");
+//                }
+//
+//                calculos = new CalculosJulgamento(matJulg, sizeCri, julg);
+//
+//                if (hierarquia.get_Tipo_Media().equals("Aritmética")) {
+//                    calculos.calcularAutoVetorAritmetica();
+//                } else {
+//                    calculos.calcularAutoVetorGeometrica();
+//                }
             }
         });
 
