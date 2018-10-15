@@ -26,7 +26,7 @@ public class TelaJulgamento extends AppCompatActivity {
         }
 
         Bundle extras = getIntent().getExtras();
-        final int selecionado = extras.getInt("selecionado");
+        final int pin = extras.getInt("pin");
 
         Button crixcri;
         Button crixalt;
@@ -42,7 +42,7 @@ public class TelaJulgamento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(TelaJulgamento.this, TelaCriterioXCriterio.class);
-                it.putExtra("selecionado", selecionado);
+                it.putExtra("pin", pin);
                 startActivity(it);
             }
         });
@@ -51,7 +51,7 @@ public class TelaJulgamento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(TelaJulgamento.this, TelaCriterioXAlternativa.class);
-                it.putExtra("selecionado", selecionado);
+                it.putExtra("pin", pin);
                 startActivity(it);
             }
         });
@@ -60,7 +60,7 @@ public class TelaJulgamento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(TelaJulgamento.this, TelaCriterioXSubCriterio.class);
-                it.putExtra("selecionado", selecionado);
+                it.putExtra("pin", pin);
                 startActivity(it);
             }
         });

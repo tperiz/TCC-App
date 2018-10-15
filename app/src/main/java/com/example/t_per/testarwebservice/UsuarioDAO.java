@@ -17,7 +17,7 @@ import java.util.Vector;
 
 public class UsuarioDAO {
 
-    private static final String URL = "http://192.168.1.3:8080/ExemploWS/services/UsuarioDao?wsdl";
+    private static final String URL = "http://10.0.0.106:8080/ExemploWS/services/UsuarioDao?wsdl";
     private static final String NAMESPACE = "http://exemploWS.videoaulazeni.com.br";
     private static final String inserir = "inserirUsuario";
     private static final String inserirJulgamento = "inserirJulgamento";
@@ -30,6 +30,7 @@ public class UsuarioDAO {
     private static final String buscarTodasAltHie = "buscarTodasAlternativasPorHierarquia";
     private static final String buscarTodosSub = "buscarTodosSubCriterios";
     private static final String buscarPorId = "buscarUsuarioPorId";
+    private static final String buscarHier = "buscarHierarquia";
 
     public boolean inserirUsuario(Usuario usuario){
 
@@ -123,6 +124,24 @@ public class UsuarioDAO {
         }
 
         return lista;
+    }
+
+    public int getHierarquiaPorPin(int pin){
+        SoapObject buscarHierarquia = new SoapObject(NAMESPACE,buscarHier);
+        buscarHierarquia.addProperty("pin", pin);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(buscarHierarquia);
+        envelope.implicitTypes = true;
+
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + buscarHier, envelope);
+            SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
+            return Integer.parseInt(resposta.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 

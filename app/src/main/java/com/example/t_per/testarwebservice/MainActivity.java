@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -23,35 +24,15 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        final ArrayList<Integer> lista3 = new ArrayList<Integer>();
-        final ArrayList<String> lista2 = new ArrayList<String>();
-
-        UsuarioDAO dao = new UsuarioDAO();
-        ArrayList<Hierarquia> lista = new ArrayList<Hierarquia>();
-
-        lista = dao.buscarTodasHierarquias();
-        for(Hierarquia hierarq : lista){
-            lista2.add(hierarq.getNome());
-            lista3.add(hierarq.getIdhierarquia());
-        }
-
-        final Spinner s = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lista2);
-        ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        s.setAdapter(spinnerArrayAdapter);
-
-        final int selecionado = 0;
-
-        Button b = (Button) findViewById(R.id.button);
+        Button b = findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                int selecionado = lista3.get(s.getSelectedItemPosition()).intValue();
+                EditText p = findViewById(R.id.pin);
+                int pin = Integer.parseInt(p.getText().toString());
 
                 Intent it = new Intent(MainActivity.this, TelaJulgamento.class);
-                it.putExtra("selecionado", selecionado);
+                it.putExtra("pin", pin);
                 startActivity(it);
             }
         });

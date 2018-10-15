@@ -1,6 +1,7 @@
 package com.example.t_per.testarwebservice;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         }
 
         Bundle extras = getIntent().getExtras();
-        final int selecionado = extras.getInt("selecionado");
+        final int pin = extras.getInt("pin");
 
         Spinner[] spesquerda = new Spinner[100];
         Spinner[] spdireita = new Spinner[100];
@@ -47,12 +48,14 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         }
 
         UsuarioDAO dao = new UsuarioDAO();
-        final ArrayList<Criterio> listaCriterios = dao.buscarTodosCriterios(selecionado);
+        final int hierarquiaId = dao.getHierarquiaPorPin(pin);
+        final ArrayList<Criterio> listaCriterios = dao.buscarTodosCriterios(hierarquiaId);
         ArrayList<String> listaNomeCriterios = new ArrayList<String>();
         for (Criterio cri : listaCriterios) {
             listaNomeCriterios.add(cri.getNome());
         }
         titulo.setText("Criterio X Criterio");
+        titulo.setTextColor(Color.BLACK);
         titulo.setWidth(500);
         titulo.setHeight(150);
         titulo.setTextSize(30);
@@ -106,64 +109,22 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         voltar.setText("Voltar");
         voltar.setY(x);
         voltar.setX(100);
+        voltar.setBackgroundColor(Color.parseColor("#303F9F"));
         julgamento.addView(voltar);
 
         Button enviar = new Button(this);
         enviar.setWidth(20);
         enviar.setHeight(10);
-        enviar.setText("Julgar");
+        enviar.setText("Votar");
         enviar.setY(x);
         enviar.setX(300);
+        enviar.setBackgroundColor(Color.parseColor("#303F9F"));
         julgamento.addView(enviar);
 
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                double aux = 0;
-//                //System.out.println(" listCheckBoxes " + listCheckBoxes.size());
-//                for (int i = 0; i < 6; i++) {
-//                    JRadioButton checkBoxes[] = listCheckBoxes.get(i);
-//                    for (int j = 0; j < checkBoxes.length; j++) {
-//                        if (checkBoxes[j].isSelected()) {
-//                            aux = Double.valueOf(vetNumbers[j]);
-//                            numerosJulgamento.add(aux);
-//                        }
-//                    }
-//                }
-//                int j = 1;
-//                int k = 0;
-//                int aux1 = 0;
-//                int aux2 = 0;
-//                String aux3 = "";
-//                for (int i = 0; i < posicaoMatJulg.size(); i = i + 2) {
-//                    aux1 = posicaoMatJulg.get(i);
-//                    aux2 = posicaoMatJulg.get(j);
-//                    aux3 = String.valueOf(numerosJulgamento.get(k));
-//                    matJulg[aux1][aux2] = Double.valueOf(aux3);
-//                    k++;
-//                    j = j + 2;
-//                }
-//                for (int l = 0; l < matJulg.length; l++) {
-//                    for (int m = 0; m < matJulg.length; m++) {
-//                        if (l == m) {
-//                            matJulg[l][m] = 1;
-//                        }
-//                        matJulg[m][l] = 1 / matJulg[l][m];
 //
-//                        System.out.print("|");
-//                        System.out.print(matJulg[l][m]);
-//                        System.out.print("|");
-//                    }
-//                    System.out.println("");
-//                }
-//
-//                calculos = new CalculosJulgamento(matJulg, sizeCri, julg);
-//
-//                if (hierarquia.get_Tipo_Media().equals("Aritmética")) {
-//                    calculos.calcularAutoVetorAritmetica();
-//                } else {
-//                    calculos.calcularAutoVetorGeometrica();
-//                }
             }
         });
 
@@ -171,7 +132,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(TelaCriterioXCriterio.this, TelaJulgamento.class);
-                it.putExtra("selecionado", selecionado);
+                it.putExtra("pin", pin);
                 startActivity(it);
             }
         });
