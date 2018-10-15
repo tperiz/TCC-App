@@ -17,7 +17,7 @@ import java.util.Vector;
 
 public class UsuarioDAO {
 
-    private static final String URL = "http://10.0.0.106:8080/ExemploWS/services/UsuarioDao?wsdl";
+    private static final String URL = "http://187.108.106.61:8080/ExemploWS/services/UsuarioDao?wsdl";
     private static final String NAMESPACE = "http://exemploWS.videoaulazeni.com.br";
     private static final String inserir = "inserirUsuario";
     private static final String inserirJulgamento = "inserirJulgamento";
