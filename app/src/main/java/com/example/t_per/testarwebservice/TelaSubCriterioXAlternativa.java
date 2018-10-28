@@ -69,10 +69,10 @@ public class TelaSubCriterioXAlternativa extends AppCompatActivity {
                 for (int k = 0 ; k < listaCriterios.get(j).getSub().size(); k++) {
                     for (int l = 0 ; l < listaCriterios.get(j).getSub().get(k).getAlt().size(); l++) {
                         spesquerda[j] = new Spinner(this);
-                        spesquerda[j].setX(150);
+                        spesquerda[j].setX(190);
                         spesquerda[j].setY(x - 30);
                         spdireita[j] = new Spinner(this);
-                        spdireita[j].setX(300);
+                        spdireita[j].setX(350);
                         spdireita[j].setY(x - 30);
 
                         julgamento.addView(spesquerda[j]);
@@ -96,7 +96,7 @@ public class TelaSubCriterioXAlternativa extends AppCompatActivity {
                         julgamento.addView(txEsquerda[j]);
 
                         txDireita[k] = new TextView(this);
-                        txDireita[k].setX(450);
+                        txDireita[k].setX(490);
                         txDireita[k].setY(x);
                         txDireita[k].setText(listaCriterios.get(j).getSub().get(k).getAlt().get(l).getNome());
                         julgamento.addView(txDireita[k]);

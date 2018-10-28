@@ -55,7 +55,7 @@ public class TelaCriterioXSubCriterio extends AppCompatActivity {
             ArrayList<SubCriterio> listaSubCriterios = dao.buscarTodosSubCriterios(cri.getIdcirterio(), hierarquiaId);
             cri.setSub(listaSubCriterios);
         }
-        titulo.setText("Criterio X SubCriterio");
+        titulo.setText("Critério X SubCritério");
         titulo.setTextColor(Color.BLACK);
         titulo.setWidth(700);
         titulo.setHeight(150);
@@ -68,10 +68,10 @@ public class TelaCriterioXSubCriterio extends AppCompatActivity {
            if(listaCriterios.get(j).getSub() != null){
                for (int k = 0 ; k < listaCriterios.get(j).getSub().size(); k++) {
                    spesquerda[j] = new Spinner(this);
-                   spesquerda[j].setX(150);
+                   spesquerda[j].setX(170);
                    spesquerda[j].setY(x - 30);
                    spdireita[j] = new Spinner(this);
-                   spdireita[j].setX(300);
+                   spdireita[j].setX(330);
                    spdireita[j].setY(x - 30);
 
                    julgamento.addView(spesquerda[j]);
@@ -89,13 +89,13 @@ public class TelaCriterioXSubCriterio extends AppCompatActivity {
                    spdireita[j].setHorizontalScrollBarEnabled(true);
 
                    txEsquerda[j] = new TextView(this);
-                   txEsquerda[j].setX(50);
+                   txEsquerda[j].setX(70);
                    txEsquerda[j].setY(x);
                    txEsquerda[j].setText(listaCriterios.get(j).getNome());
                    julgamento.addView(txEsquerda[j]);
 
                    txDireita[k] = new TextView(this);
-                   txDireita[k].setX(450);
+                   txDireita[k].setX(470);
                    txDireita[k].setY(x);
                    txDireita[k].setText(listaCriterios.get(j).getSub().get(k).getNome());
                    julgamento.addView(txDireita[k]);

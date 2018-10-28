@@ -1,6 +1,7 @@
 package com.example.t_per.testarwebservice;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -20,7 +21,7 @@ public class UsuarioDAO {
     private static final String URL = "http://187.108.106.61:8080/ExemploWS/services/UsuarioDao?wsdl";
     private static final String NAMESPACE = "http://exemploWS.videoaulazeni.com.br";
     private static final String inserir = "inserirUsuario";
-    private static final String inserirJulgamento = "inserirJulgamento";
+    private static final String inserirVoto = "inserirVoto";
     private static final String excluir = "excluirUsuario";
     private static final String atualizar = "atualizarUsuario";
     private static final String buscarTodosUsu = "buscarTodosUsuarios";
@@ -272,22 +273,25 @@ public class UsuarioDAO {
         return lista;
     }
 
-    public boolean inserirJulgamento(Julgamento julgamento){
+    public boolean inserirVoto(int hierarquia, String tipoVoto, ArrayList<Integer> listaVoto){
 
-        SoapObject inserirJulg = new SoapObject(NAMESPACE,inserirJulgamento);
-        SoapObject user = new SoapObject(NAMESPACE,"julgamento");
-        user.addProperty("valormax", julgamento.getAuto_valor_maximo());
-        user.addProperty("indice", julgamento.getIndice_coerencia());
-        user.addProperty("razao", julgamento.getRazao_coerencia());
-        inserirJulg.addSoapObject(user);
+        SoapObject inserirVot = new SoapObject(NAMESPACE,inserirVoto);
+        SoapObject soapObj = new SoapObject(NAMESPACE, "");
+        for (Integer i : listaVoto){
+            soapObj.addProperty("int", i);
+        }
+
+        inserirVot.addProperty("listaVoto", soapObj);
+        inserirVot.addProperty("tipoVoto", tipoVoto);
+        inserirVot.addProperty("hierarquia", hierarquia);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-        envelope.setOutputSoapObject(inserirJulg);
+        envelope.setOutputSoapObject(inserirVot);
         envelope.implicitTypes = true;
 
         HttpTransportSE http = new HttpTransportSE(URL);
         try {
-            http.call("urn:" + inserirJulgamento, envelope);
+            http.call("urn:" + inserirVoto, envelope);
             SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
             return Boolean.parseBoolean(resposta.toString());
         } catch (Exception e) {
@@ -296,8 +300,5 @@ public class UsuarioDAO {
         }
 
     }
-
-
-
 
 }

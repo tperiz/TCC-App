@@ -116,6 +116,6 @@ public class CalculosJulgamento {
     }
 
     public void salvar() throws SQLException {
-        dao.inserirJulgamento(julg);
+
     }
 }
