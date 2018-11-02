@@ -15,25 +15,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TelaCriterioXCriterio" android:screenOrientation="portrait"
+        <activity android:name=".TelaCriterioXCriterio" android:screenOrientation="landscape"
             android:label="@string/app_name">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TelaCriterioXSubCriterio" android:screenOrientation="portrait"
+        <activity android:name=".TelaCriterioXSubCriterio" android:screenOrientation="landscape"
             android:label="@string/app_name">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TelaCriterioXAlternativa" android:screenOrientation="portrait"
+        <activity android:name=".TelaCriterioXAlternativa" android:screenOrientation="landscape"
             android:label="@string/app_name">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TelaSubCriterioXAlternativa" android:screenOrientation="portrait"
+        <activity android:name=".TelaSubCriterioXAlternativa" android:screenOrientation="landscape"
             android:label="@string/app_name">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

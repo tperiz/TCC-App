@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,8 +36,8 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         final int pin = extras.getInt("pin");
 
-        Spinner[] spesquerda = new Spinner[100];
-        Spinner[] spdireita = new Spinner[100];
+        HorizontalScrollView[] hs = new HorizontalScrollView[100];
+        final CheckBox[][] cb = new CheckBox[100][20];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
         TextView titulo = new TextView(this);
@@ -45,7 +48,7 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
         for (int i = 0; i <= 9; i++) {
             listaSpinners.add(i);
         }
-        UsuarioDAO dao = new UsuarioDAO();
+        final UsuarioDAO dao = new UsuarioDAO();
         final int hierarquiaId = dao.getHierarquiaPorPin(pin);
         final ArrayList<Criterio> listaCriterios = dao.buscarTodosCriterios(hierarquiaId);
         ArrayList<String> listaNomeCriterios = new ArrayList<String>();
@@ -65,72 +68,90 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
         titulo.setHeight(150);
         titulo.setTextSize(30);
         titulo.setY(50);
-        titulo.setX(30);
+        titulo.setX(330);
         julgamento.addView(titulo);
-        int x = 200;
+        int y = 200;
+        int linhas = 0;
         for (int j = 0; j < listaCriterios.size(); j++) {
             if(listaCriterios.get(j).getAlt().size() > 0){
                 for (int k = 0 ; k < listaCriterios.get(j).getAlt().size(); k++) {
-                    spesquerda[j] = new Spinner(this);
-                    spesquerda[j].setX(150);
-                    spesquerda[j].setY(x - 30);
-                    spdireita[j] = new Spinner(this);
-                    spdireita[j].setX(300);
-                    spdireita[j].setY(x - 30);
-
-                    julgamento.addView(spesquerda[j]);
-                    ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
-                    ArrayAdapter<Integer> spinnerArrayAdapter = arrayAdapter;
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                    spesquerda[j].setAdapter(spinnerArrayAdapter);
-                    spesquerda[j].setHorizontalScrollBarEnabled(true);
-
-                    julgamento.addView(spdireita[j]);
-                    ArrayAdapter<Integer> arrayAdapter2 = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_dropdown_item, listaSpinners);
-                    ArrayAdapter<Integer> spinnerArrayAdapter2 = arrayAdapter2;
-                    spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                    spdireita[j].setAdapter(spinnerArrayAdapter2);
-                    spdireita[j].setHorizontalScrollBarEnabled(true);
+                    hs[linhas] = new HorizontalScrollView(this);
+                    hs[linhas].setX(350);
+                    hs[linhas].setY(y - 10);
+                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(400,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    hs[linhas].setLayoutParams(lp);
+                    LinearLayout ll = new LinearLayout(this);
+                    int esq = 9;
+                    for(int c = 0; c < 9; c++){
+                        cb[linhas][c] = new CheckBox(this);
+                        cb[linhas][c].setText(String.valueOf(esq));
+                        ll.addView(cb[linhas][c]);
+                        esq--;
+                    }
+                    int dir = 2;
+                    for(int c = 9; c <= 16; c++){
+                        cb[linhas][c] = new CheckBox(this);
+                        cb[linhas][c].setText(String.valueOf(dir));
+                        ll.addView(cb[linhas][c]);
+                        dir++;
+                    }
+                    hs[linhas].addView(ll);
+                    julgamento.addView(hs[linhas]);
 
                     txEsquerda[j] = new TextView(this);
-                    txEsquerda[j].setX(50);
-                    txEsquerda[j].setY(x);
+                    txEsquerda[j].setX(20);
+                    txEsquerda[j].setY(y);
+                    txEsquerda[j].setWidth(350);
                     txEsquerda[j].setText(listaCriterios.get(j).getNome());
                     julgamento.addView(txEsquerda[j]);
 
                     txDireita[k] = new TextView(this);
-                    txDireita[k].setX(450);
-                    txDireita[k].setY(x);
+                    txDireita[k].setX(800);
+                    txDireita[k].setY(y);
+                    txDireita[k].setWidth(350);
                     txDireita[k].setText(listaCriterios.get(j).getAlt().get(k).getNome());
                     julgamento.addView(txDireita[k]);
 
-                    x = x + 100;
+                    y = y + 100;
+                    linhas++;
                 }
             }
         }
+
+        final int linha = linhas;
 
         Button voltar = new Button(this);
         voltar.setWidth(20);
         voltar.setHeight(10);
         voltar.setText("Voltar");
-        voltar.setY(x);
-        voltar.setX(100);
+        voltar.setY(y);
+        voltar.setX(370);
         voltar.setBackgroundColor(Color.parseColor("#303F9F"));
+        voltar.setTextColor(Color.WHITE);
         julgamento.addView(voltar);
 
         Button enviar = new Button(this);
         enviar.setWidth(20);
         enviar.setHeight(10);
         enviar.setText("Votar");
-        enviar.setY(x);
-        enviar.setX(300);
+        enviar.setY(y);
+        enviar.setX(570);
         enviar.setBackgroundColor(Color.parseColor("#303F9F"));
+        enviar.setTextColor(Color.WHITE);
         julgamento.addView(enviar);
 
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ArrayList<Integer > listaVoto = new ArrayList<Integer>();
+                for (int j = 0; j < linha; j++) {
+                    for (int c = 0; c <= 16; c++) {
+                        if(cb[j][c].isChecked()){
+                            listaVoto.add(c);
+                        }
+                    }
+                }
+                dao.inserirVoto(hierarquiaId, "crixalt", listaVoto);
             }
         });
 
@@ -145,6 +166,6 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
 
 
         ViewGroup.LayoutParams params = julgamento.getLayoutParams();
-        params.height= x + 200;
+        params.height= y + 200;
     }
 }

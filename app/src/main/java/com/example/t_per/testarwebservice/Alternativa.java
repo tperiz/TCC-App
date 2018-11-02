@@ -7,6 +7,16 @@ public class Alternativa {
 	private int hierarquia;
 	private String nome;
 	private String descricao;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	private int id;
 	
 	
 	

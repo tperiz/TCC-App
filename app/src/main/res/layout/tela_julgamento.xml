@@ -27,12 +27,11 @@
         android:layout_width="400px"
         android:layout_height="100px"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="#3F51B5"
         android:text="Criterio x Criterio"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -48,6 +47,7 @@
         android:layout_marginRight="8dp"
         android:background="#3F51B5"
         android:text="Criterio X Alternativa"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crixcri" />
@@ -63,6 +63,7 @@
         android:layout_marginRight="8dp"
         android:background="#3F51B5"
         android:text="Criterio X Subcriterio"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crixalt" />
@@ -78,6 +79,7 @@
         android:layout_marginRight="8dp"
         android:background="#303F9F"
         android:text="Voltar"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/crixsubcri" />

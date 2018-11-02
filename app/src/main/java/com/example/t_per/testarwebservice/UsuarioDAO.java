@@ -1,5 +1,7 @@
 package com.example.t_per.testarwebservice;
 
+import android.util.Log;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
@@ -110,9 +112,10 @@ public class UsuarioDAO {
         try {
             http.call("urn:" + buscarTodosCri, envelope);
             Vector<SoapObject> resposta = (Vector<SoapObject>) envelope.getResponse();
+
             for (SoapObject soapObject: resposta) {
                 Criterio cri = new Criterio();
-                cri.setIdcirterio(Integer.parseInt(soapObject.getProperty("idcriterio").toString()));
+                cri.setIdcirterio(Integer.parseInt(soapObject.getProperty("idcirterio").toString()));
                 cri.setHierarquia(Integer.parseInt(soapObject.getProperty("hierarquia").toString()));
                 cri.setNome(soapObject.getProperty("nome").toString());
                 cri.setDescricao(soapObject.getProperty("descricao").toString());
@@ -199,6 +202,7 @@ public class UsuarioDAO {
                 alt.setNome(soapObject.getProperty("nome").toString());
                 alt.setDescricao(soapObject.getProperty("descricao").toString());
                 alt.setHierarquia(Integer.parseInt(soapObject.getProperty("hierarquia").toString()));
+                alt.setId(Integer.parseInt(soapObject.getProperty("id").toString()));
                 lista.add(alt);
 
             }
@@ -230,6 +234,7 @@ public class UsuarioDAO {
                 alt.setNome(soapObject.getProperty("nome").toString());
                 alt.setDescricao(soapObject.getProperty("descricao").toString());
                 alt.setHierarquia(Integer.parseInt(soapObject.getProperty("hierarquia").toString()));
+                alt.setId(Integer.parseInt(soapObject.getProperty("id").toString()));
                 lista.add(alt);
 
             }
@@ -280,10 +285,10 @@ public class UsuarioDAO {
         for (Integer i : listaVoto){
             soapObj.addProperty("int", i);
         }
-
-        inserirVot.addProperty("listaVoto", soapObj);
-        inserirVot.addProperty("tipoVoto", tipoVoto);
         inserirVot.addProperty("hierarquia", hierarquia);
+        inserirVot.addProperty("tipoVoto", tipoVoto);
+        inserirVot.addProperty("listaVoto", soapObj);
+
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.setOutputSoapObject(inserirVot);

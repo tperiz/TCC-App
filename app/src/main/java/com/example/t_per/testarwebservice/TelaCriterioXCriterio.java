@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -44,18 +45,11 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
 
         HorizontalScrollView[] hs = new HorizontalScrollView[100];
         final CheckBox[][] cb = new CheckBox[100][20];
-        Spinner[] spesquerda = new Spinner[100];
-        Spinner[] spdireita = new Spinner[100];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
         TextView titulo = new TextView(this);
 
         RelativeLayout julgamento = findViewById(R.id.julgamentos);
-
-        ArrayList<Integer> listaSpinners = new ArrayList<Integer>();
-        for (int i = 0; i <= 9; i++) {
-            listaSpinners.add(i);
-        }
 
         final UsuarioDAO dao = new UsuarioDAO();
         final int hierarquiaId = dao.getHierarquiaPorPin(pin);
@@ -66,31 +60,31 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         }
         titulo.setText("Criterio X Criterio");
         titulo.setTextColor(Color.BLACK);
-        titulo.setWidth(500);
+        titulo.setWidth(700);
         titulo.setHeight(150);
         titulo.setTextSize(30);
         titulo.setY(50);
-        titulo.setX(30);
+        titulo.setX(330);
         julgamento.addView(titulo);
-        int x = 200;
+        int y = 200;
         int linhas = 0;
         for (int j = 0; j < listaNomeCriterios.size(); j++) {
             for (int k = j + 1; k < listaNomeCriterios.size(); k++) {
                 hs[linhas] = new HorizontalScrollView(this);
-                hs[linhas].setX(100);
-                hs[linhas].setY(x - 10);
+                hs[linhas].setX(350);
+                hs[linhas].setY(y - 10);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(400,RelativeLayout.LayoutParams.WRAP_CONTENT);
                 hs[linhas].setLayoutParams(lp);
                 LinearLayout ll = new LinearLayout(this);
                 int esq = 9;
-                for(int c = 0; c <= 9; c++){
+                for(int c = 0; c < 9; c++){
                     cb[linhas][c] = new CheckBox(this);
                     cb[linhas][c].setText(String.valueOf(esq));
                     ll.addView(cb[linhas][c]);
                     esq--;
                 }
-                int dir = 1;
-                for(int c = 10; c <= 18; c++){
+                int dir = 2;
+                for(int c = 9; c <= 16; c++){
                     cb[linhas][c] = new CheckBox(this);
                     cb[linhas][c].setText(String.valueOf(dir));
                     ll.addView(cb[linhas][c]);
@@ -102,17 +96,19 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
 
                 txEsquerda[j] = new TextView(this);
                 txEsquerda[j].setX(20);
-                txEsquerda[j].setY(x);
+                txEsquerda[j].setY(y);
+                txEsquerda[j].setWidth(350);
                 txEsquerda[j].setText(listaNomeCriterios.get(j));
                 julgamento.addView(txEsquerda[j]);
 
                 txDireita[k] = new TextView(this);
-                txDireita[k].setX(530);
-                txDireita[k].setY(x);
+                txDireita[k].setX(800);
+                txDireita[k].setY(y);
+                txDireita[k].setWidth(350);
                 txDireita[k].setText(listaNomeCriterios.get(k));
                 julgamento.addView(txDireita[k]);
 
-                x = x + 100;
+                y = y + 100;
                 linhas++;
             }
         }
@@ -122,8 +118,8 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         voltar.setWidth(20);
         voltar.setHeight(10);
         voltar.setText("Voltar");
-        voltar.setY(x);
-        voltar.setX(100);
+        voltar.setY(y);
+        voltar.setX(370);
         voltar.setBackgroundColor(Color.parseColor("#303F9F"));
         voltar.setTextColor(Color.WHITE);
         julgamento.addView(voltar);
@@ -132,8 +128,8 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         enviar.setWidth(20);
         enviar.setHeight(10);
         enviar.setText("Votar");
-        enviar.setY(x);
-        enviar.setX(300);
+        enviar.setY(y);
+        enviar.setX(570);
         enviar.setBackgroundColor(Color.parseColor("#303F9F"));
         enviar.setTextColor(Color.WHITE);
         julgamento.addView(enviar);
@@ -142,14 +138,10 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<Integer > listaVoto = new ArrayList<Integer>();
-                //int[] vetor = new int[linha];
                 for (int j = 0; j < linha; j++) {
-                    Log.i("linha", String.valueOf(j));
-                    for (int c = 0; c <= 18; c++) {
-                        Log.i("coluna", String.valueOf(c));
+                    for (int c = 0; c <= 16; c++) {
                         if(cb[j][c].isChecked()){
                             listaVoto.add(c);
-                            //vetor[j] = c;
                         }
                     }
                 }
@@ -167,7 +159,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
         });
 
         ViewGroup.LayoutParams params = julgamento.getLayoutParams();
-        params.height= x + 200;
+        params.height= y + 200;
     }
 
 
