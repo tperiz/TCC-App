@@ -1,16 +1,14 @@
 package com.example.t_per.testarwebservice;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +22,30 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Aviso");
+        builder.setMessage("Esse Pin não está registrado ou ainda não foi liberado!");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+            }
+        });
+        final AlertDialog alerta = builder.create();
+
+
         Button b = findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText p = findViewById(R.id.pin);
                 int pin = Integer.parseInt(p.getText().toString());
-
-                Intent it = new Intent(MainActivity.this, TelaJulgamento.class);
-                it.putExtra("pin", pin);
-                startActivity(it);
+                UsuarioDAO dao = new UsuarioDAO();
+                if(dao.getHierarquiaPorPin(pin) == 0){
+                    alerta.show();
+                }else{
+                    Intent it = new Intent(MainActivity.this, TelaJulgamento.class);
+                    it.putExtra("pin", pin);
+                    startActivity(it);
+                }
             }
         });
 
