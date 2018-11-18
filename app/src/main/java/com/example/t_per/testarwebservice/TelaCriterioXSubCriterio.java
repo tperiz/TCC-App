@@ -44,6 +44,7 @@ public class TelaCriterioXSubCriterio extends AppCompatActivity {
         final CheckBox[][] cb = new CheckBox[100][20];
         TextView[] txEsquerda = new TextView[100];
         TextView[] txDireita = new TextView[100];
+        TextView[] subTitulos = new TextView[100];
         TextView titulo = new TextView(this);
 
         RelativeLayout julgamento = findViewById(R.id.julgamentos);
@@ -61,97 +62,112 @@ public class TelaCriterioXSubCriterio extends AppCompatActivity {
             ArrayList<SubCriterio> listaSubCriterios = dao.buscarTodosSubCriterios(cri.getIdcirterio(), hierarquiaId);
             cri.setSub(listaSubCriterios);
         }
-        titulo.setText("Critério X SubCritério");
+        titulo.setText("SubCritério X SubCritério");
         titulo.setTextColor(Color.BLACK);
         titulo.setWidth(700);
         titulo.setHeight(150);
         titulo.setTextSize(30);
         titulo.setY(50);
-        titulo.setX(330);
+        titulo.setX(225);
+        titulo.setTypeface(null, Typeface.BOLD);
         julgamento.addView(titulo);
         int y = 200;
         int linhas = 0;
        for (int j = 0; j < listaCriterios.size(); j++) {
            if(listaCriterios.get(j).getSub() != null){
+               subTitulos[j] = new TextView(this);
+               subTitulos[j].setText("Julgamento para subcritérios do critério: " + listaCriterios.get(j).getNome());
+               subTitulos[j].setTextColor(Color.BLACK);
+               subTitulos[j].setWidth(1000);
+               subTitulos[j].setHeight(150);
+               subTitulos[j].setTextSize(20);
+               subTitulos[j].setY(y + 10);
+               subTitulos[j].setX(100);
+               subTitulos[j].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+               subTitulos[j].setTypeface(null, Typeface.BOLD);
+               julgamento.addView(subTitulos[j]);
+               y = y + 150;
                for (int k = 0 ; k < listaCriterios.get(j).getSub().size(); k++) {
-                   RelativeLayout ll = new RelativeLayout(this);
-                   ll.setX(40);
-                   ll.setY(y + 100);
-                   RelativeLayout.LayoutParams l = new RelativeLayout.LayoutParams(1200,RelativeLayout.LayoutParams.WRAP_CONTENT);
-                   l.height = 100;
-                   ll.setLayoutParams(l);
+                   for (int s = k + 1 ; s < listaCriterios.get(j).getSub().size(); s++) {
+                       RelativeLayout ll = new RelativeLayout(this);
+                       ll.setX(40);
+                       ll.setY(y + 100);
+                       RelativeLayout.LayoutParams l = new RelativeLayout.LayoutParams(1200,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                       l.height = 100;
+                       ll.setLayoutParams(l);
 
-                   int esq = 9;
-                   int x = 10;
-                   for(int c = 0; c < 9; c++){
-                       cb[linhas][c] = new CheckBox(this);
-                       TextView votos = new TextView(this);
-                       votos.setText(String.valueOf(esq));
-                       votos.setX(x + 25);
-                       votos.setY(10);
-                       votos.setTypeface(null, Typeface.BOLD);
-                       if(c==8){
-                           votos.setTextColor(Color.BLACK);
-                       }else{
-                           votos.setTextColor(Color.parseColor("#2f0591"));
+                       int esq = 9;
+                       int x = 10;
+                       for(int c = 0; c < 9; c++){
+                           cb[linhas][c] = new CheckBox(this);
+                           TextView votos = new TextView(this);
+                           votos.setText(String.valueOf(esq));
+                           votos.setX(x + 25);
+                           votos.setY(10);
+                           votos.setTypeface(null, Typeface.BOLD);
+                           if(c==8){
+                               votos.setTextColor(Color.BLACK);
+                           }else{
+                               votos.setTextColor(Color.parseColor("#2f0591"));
+                           }
+                           cb[linhas][c].setX(x);
+                           cb[linhas][c].setY(50);
+                           ll.addView(cb[linhas][c]);
+                           ll.addView(votos);
+                           esq--;
+                           x = x + 60;
                        }
-                       cb[linhas][c].setX(x);
-                       cb[linhas][c].setY(50);
-                       ll.addView(cb[linhas][c]);
-                       ll.addView(votos);
-                       esq--;
-                       x = x + 60;
+                       int dir = 2;
+                       for(int c = 9; c <= 16; c++){
+                           cb[linhas][c] = new CheckBox(this);
+                           TextView votos = new TextView(this);
+                           votos.setText(String.valueOf(dir));
+                           votos.setX(x + 25);
+                           votos.setY(10);
+                           votos.setTypeface(null, Typeface.BOLD);
+                           votos.setTextColor(Color.parseColor("#7a6707"));
+                           cb[linhas][c].setX(x);
+                           cb[linhas][c].setY(50);
+                           ll.addView(cb[linhas][c]);
+                           ll.addView(votos);
+                           dir++;
+                           x = x + 60;
+                       }
+                       julgamento.addView(ll);
+
+                       txEsquerda[k] = new TextView(this);
+                       txEsquerda[k].setX(20);
+                       txEsquerda[k].setY(y + 5);
+                       txEsquerda[k].setTextColor(Color.parseColor("#2f0591"));
+                       txEsquerda[k].setTypeface(null, Typeface.BOLD);
+                       txEsquerda[k].setWidth(480);
+                       txEsquerda[k].setTextSize(15);
+                       txEsquerda[k].setText(listaCriterios.get(j).getSub().get(k).getNome());
+                       txEsquerda[k].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+                       julgamento.addView(txEsquerda[k]);
+
+                       TextView vs = new TextView(this);
+                       vs.setX(550);
+                       vs.setY(y);
+                       vs.setTextColor(Color.BLACK);
+                       vs.setWidth(30);
+                       vs.setTextSize(20);
+                       vs.setText("X");
+                       julgamento.addView(vs);
+
+                       txDireita[s] = new TextView(this);
+                       txDireita[s].setX(620);
+                       txDireita[s].setY(y + 5);
+                       txDireita[s].setTextColor(Color.parseColor("#7a6707"));
+                       txDireita[s].setTypeface(null, Typeface.BOLD);
+                       txDireita[s].setWidth(480);
+                       txDireita[s].setTextSize(15);
+                       txDireita[s].setText(listaCriterios.get(j).getSub().get(s).getNome());
+                       julgamento.addView(txDireita[s]);
+
+                       y = y + 250;
+                       linhas++;
                    }
-                   int dir = 2;
-                   for(int c = 9; c <= 16; c++){
-                       cb[linhas][c] = new CheckBox(this);
-                       TextView votos = new TextView(this);
-                       votos.setText(String.valueOf(dir));
-                       votos.setX(x + 25);
-                       votos.setY(10);
-                       votos.setTypeface(null, Typeface.BOLD);
-                       votos.setTextColor(Color.parseColor("#7a6707"));
-                       cb[linhas][c].setX(x);
-                       cb[linhas][c].setY(50);
-                       ll.addView(cb[linhas][c]);
-                       ll.addView(votos);
-                       dir++;
-                       x = x + 60;
-                   }
-                   julgamento.addView(ll);
-
-                   txEsquerda[j] = new TextView(this);
-                   txEsquerda[j].setX(20);
-                   txEsquerda[j].setY(y + 5);
-                   txEsquerda[j].setTextColor(Color.parseColor("#2f0591"));
-                   txEsquerda[j].setTypeface(null, Typeface.BOLD);
-                   txEsquerda[j].setWidth(480);
-                   txEsquerda[j].setTextSize(15);
-                   txEsquerda[j].setText(listaCriterios.get(j).getNome());
-                   txEsquerda[j].setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-                   julgamento.addView(txEsquerda[j]);
-
-                   TextView vs = new TextView(this);
-                   vs.setX(550);
-                   vs.setY(y);
-                   vs.setTextColor(Color.BLACK);
-                   vs.setWidth(30);
-                   vs.setTextSize(20);
-                   vs.setText("X");
-                   julgamento.addView(vs);
-
-                   txDireita[k] = new TextView(this);
-                   txDireita[k].setX(620);
-                   txDireita[k].setY(y + 5);
-                   txDireita[k].setTextColor(Color.parseColor("#7a6707"));
-                   txDireita[k].setTypeface(null, Typeface.BOLD);
-                   txDireita[k].setWidth(480);
-                   txDireita[k].setTextSize(15);
-                   txDireita[k].setText(listaCriterios.get(j).getSub().get(k).getNome());
-                   julgamento.addView(txDireita[k]);
-
-                   y = y + 250;
-                   linhas++;
                }
            }
         }
