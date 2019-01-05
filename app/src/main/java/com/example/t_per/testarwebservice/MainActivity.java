@@ -38,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText p = findViewById(R.id.pin);
                 int pin = Integer.parseInt(p.getText().toString());
+                EditText n = findViewById(R.id.nome);
+                String nome = n.getText().toString();
                 UsuarioDAO dao = new UsuarioDAO();
                 if(dao.getHierarquiaPorPin(pin) == 0){
                     alerta.show();
                 }else{
                     Intent it = new Intent(MainActivity.this, TelaJulgamento.class);
                     it.putExtra("pin", pin);
+                    it.putExtra("nome", nome);
                     startActivity(it);
                 }
             }

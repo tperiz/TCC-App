@@ -34,6 +34,7 @@ public class TelaSubCriterioXAlternativa extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final int pin = extras.getInt("pin");
+        final String nome = extras.getString("nome");
 
         HorizontalScrollView[] hs = new HorizontalScrollView[100];
         final CheckBox[][] cb = new CheckBox[100][20];
@@ -226,10 +227,20 @@ public class TelaSubCriterioXAlternativa extends AppCompatActivity {
                 if(verifica != linha){
                     alerta.show();
                 }else{
-                    dao.inserirVoto(hierarquiaId, "subxalt", listaVoto);
-                    Intent it = new Intent(TelaSubCriterioXAlternativa.this, TelaJulgamento.class);
-                    it.putExtra("pin", pin);
-                    startActivity(it);
+                    dao.inserirVoto(hierarquiaId, "subxalt", listaVoto, nome);
+                    if(dao.possuiAlt(hierarquiaId)){
+                        Intent it = new Intent(TelaSubCriterioXAlternativa.this, TelaCriterioXAlternativa.class);
+                        it.putExtra("pin", pin);
+                        it.putExtra("nome", nome);
+                        startActivity(it);
+                    }else{
+                        Intent it = new Intent(TelaSubCriterioXAlternativa.this, TelaJulgamento.class);
+                        it.putExtra("pin", pin);
+                        it.putExtra("nome", nome);
+                        it.putExtra("aviso", true);
+                        startActivity(it);
+                    }
+
                 }
             }
         });
@@ -239,6 +250,7 @@ public class TelaSubCriterioXAlternativa extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(TelaSubCriterioXAlternativa.this, TelaJulgamento.class);
                 it.putExtra("pin", pin);
+                it.putExtra("nome", nome);
                 startActivity(it);
             }
         });

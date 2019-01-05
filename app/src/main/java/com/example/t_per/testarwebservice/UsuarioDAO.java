@@ -21,6 +21,7 @@ import java.util.Vector;
 public class UsuarioDAO {
 
     private static final String URL = "http://187.108.106.61:8080/ExemploWS/services/UsuarioDao?wsdl";
+    //private static final String URL = "http://10.0.0.109:8080/ExemploWS/services/UsuarioDao?wsdl";
     private static final String NAMESPACE = "http://exemploWS.videoaulazeni.com.br";
     private static final String inserir = "inserirUsuario";
     private static final String inserirVoto = "inserirVoto";
@@ -34,6 +35,10 @@ public class UsuarioDAO {
     private static final String buscarTodosSub = "buscarTodosSubCriterios";
     private static final String buscarPorId = "buscarUsuarioPorId";
     private static final String buscarHier = "buscarHierarquia";
+    private static final String possuiSubcri = "possuiSubcri";
+    private static final String possuiAlt = "possuiAlt";
+    private static final String possuiSubAlt = "possuiSubAlt";
+
 
     public boolean inserirUsuario(Usuario usuario){
 
@@ -145,6 +150,60 @@ public class UsuarioDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    public boolean possuiSubcri(int hierarquia){
+        SoapObject verifica = new SoapObject(NAMESPACE,possuiSubcri);
+        verifica.addProperty("hierarquia", hierarquia);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(verifica);
+        envelope.implicitTypes = true;
+
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + possuiSubcri, envelope);
+            SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
+            return Boolean.parseBoolean(resposta.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean possuiSubalt(int hierarquia){
+        SoapObject verifica = new SoapObject(NAMESPACE,possuiSubAlt);
+        verifica.addProperty("hierarquia", hierarquia);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(verifica);
+        envelope.implicitTypes = true;
+
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + possuiSubAlt, envelope);
+            SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
+            return Boolean.parseBoolean(resposta.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean possuiAlt(int hierarquia){
+        SoapObject verifica = new SoapObject(NAMESPACE,possuiAlt);
+        verifica.addProperty("hierarquia", hierarquia);
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.setOutputSoapObject(verifica);
+        envelope.implicitTypes = true;
+
+        HttpTransportSE http = new HttpTransportSE(URL);
+        try {
+            http.call("urn:" + possuiAlt, envelope);
+            SoapPrimitive resposta = (SoapPrimitive) envelope.getResponse();
+            return Boolean.parseBoolean(resposta.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -278,7 +337,7 @@ public class UsuarioDAO {
         return lista;
     }
 
-    public boolean inserirVoto(int hierarquia, String tipoVoto, ArrayList<Integer> listaVoto){
+    public boolean inserirVoto(int hierarquia, String tipoVoto, ArrayList<Integer> listaVoto, String nome){
 
         SoapObject inserirVot = new SoapObject(NAMESPACE,inserirVoto);
         SoapObject soapObj = new SoapObject(NAMESPACE, "");
@@ -288,6 +347,7 @@ public class UsuarioDAO {
         inserirVot.addProperty("hierarquia", hierarquia);
         inserirVot.addProperty("tipoVoto", tipoVoto);
         inserirVot.addProperty("listaVoto", soapObj);
+        inserirVot.addProperty("nome", nome);
 
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

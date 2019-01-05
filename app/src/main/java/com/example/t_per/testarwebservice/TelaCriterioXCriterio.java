@@ -45,6 +45,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final int pin = extras.getInt("pin");
+        final String nome = extras.getString("nome");
 
         HorizontalScrollView[] hs = new HorizontalScrollView[100];
         final CheckBox[][] cb = new CheckBox[100][20];
@@ -206,10 +207,18 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
                 if(verifica != linha){
                     alerta.show();
                 }else{
-                    dao.inserirVoto(hierarquiaId, "crixcri", listaVoto);
-                    Intent it = new Intent(TelaCriterioXCriterio.this, TelaJulgamento.class);
-                    it.putExtra("pin", pin);
-                    startActivity(it);
+                    dao.inserirVoto(hierarquiaId, "crixcri", listaVoto, nome);
+                    if(dao.possuiSubcri(hierarquiaId)){
+                        Intent it = new Intent(TelaCriterioXCriterio.this, TelaCriterioXSubCriterio.class);
+                        it.putExtra("pin", pin);
+                        it.putExtra("nome", nome);
+                        startActivity(it);
+                    }else if(dao.possuiAlt(hierarquiaId)){
+                        Intent it = new Intent(TelaCriterioXCriterio.this, TelaCriterioXAlternativa.class);
+                        it.putExtra("pin", pin);
+                        it.putExtra("nome", nome);
+                        startActivity(it);
+                    }
                 }
             }
         });
@@ -219,6 +228,7 @@ public class TelaCriterioXCriterio extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(TelaCriterioXCriterio.this, TelaJulgamento.class);
                 it.putExtra("pin", pin);
+                it.putExtra("nome", nome);
                 startActivity(it);
             }
         });

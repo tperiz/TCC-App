@@ -40,6 +40,7 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final int pin = extras.getInt("pin");
+        final String nome = extras.getString("nome");
 
         final CheckBox[][] cb = new CheckBox[100][20];
         TextView[] txEsquerda = new TextView[100];
@@ -210,6 +211,7 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 int verifica = 0;
                 int verifica2 = 0;
                 ArrayList<Integer > listaVoto = new ArrayList<Integer>();
@@ -228,9 +230,11 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
                 if(verifica != linha){
                     alerta.show();
                 }else{
-                    dao.inserirVoto(hierarquiaId, "crixalt", listaVoto);
+                    dao.inserirVoto(hierarquiaId, "crixalt", listaVoto, nome);
                     Intent it = new Intent(TelaCriterioXAlternativa.this, TelaJulgamento.class);
                     it.putExtra("pin", pin);
+                    it.putExtra("nome", nome);
+                    it.putExtra("aviso", true);
                     startActivity(it);
                 }
             }
@@ -241,6 +245,7 @@ public class TelaCriterioXAlternativa extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(TelaCriterioXAlternativa.this, TelaJulgamento.class);
                 it.putExtra("pin", pin);
+                it.putExtra("nome", nome);
                 startActivity(it);
             }
         });

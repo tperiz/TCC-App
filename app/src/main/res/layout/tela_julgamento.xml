@@ -6,82 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="300px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="      VOTAR"
-        android:textColor="@android:color/black"
-        android:textSize="50px"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/crixcri"
         android:layout_width="400px"
         android:layout_height="100px"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="136dp"
         android:layout_marginEnd="8dp"
         android:background="#3F51B5"
-        android:text="Criterio x Criterio"
+        android:text="Iniciar Julgamento"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/crixalt"
-        android:layout_width="400px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="#3F51B5"
-        android:text="Criterio X Alternativa"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crixcri" />
-
-    <Button
-        android:id="@+id/crixsubcri"
-        android:layout_width="400px"
-        android:layout_height="100px"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="#3F51B5"
-        android:text="Criterio X Subcriterio"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crixalt" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/voltar"
         android:layout_width="112dp"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="264dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="#303F9F"
         android:text="Voltar"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crixsubcri" />
+        app:layout_constraintTop_toBottomOf="@+id/crixcri" />
 
 </android.support.constraint.ConstraintLayout>
